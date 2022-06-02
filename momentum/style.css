@@ -101,3 +101,64 @@ header{
     width: 17rem;
     font-size: 1.8rem;
 }
+
+/*----main----*/
+.main{
+    position: relative;
+    width: 100%;
+    height: 40vh;
+    padding: 20px;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+.slider-button{
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-size: 50px 50px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    opacity: 0.6;
+    cursor: pointer;
+}
+.slider-prev{
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+    background-image: url(assets/icons/slider-prev.svg);
+}
+.slider-next{
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    background-image: url(assets/icons/slider-next.svg);
+}
+.time{
+    font-size: 10rem;
+    font-weight: 700;
+}
+.date{
+    font-size: 2.8rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+.greeting{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.greeting__phrase{
+    font-size: 3.6rem;
+    margin-right: 1.0rem;
+}
+.greeting__username{
+    width: 25rem;
+    outline: none;
+    background-color: inherit;
+    border: none;
+    font-size: 2.8rem;
+}
