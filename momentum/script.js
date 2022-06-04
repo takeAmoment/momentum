@@ -72,3 +72,63 @@ playerPlayBtn.addEventListener('click', function(){
 });
 playerPrevBtn.addEventListener('click', playPrevSong);
 playerNextBtn.addEventListener('click', playNextSong);
+
+/*---time and date---*/
+const time = document.querySelector('.time');
+const dateBlock = document.querySelector('.date');
+const greeting = document.querySelector('.greeting__phrase');
+
+const daysOfWeek = ['Sanday', 'Monday', 'Tuesday', 'Wednesday',
+        'Thursday', 'Friday', 'Saturday'];
+const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
+        'August', 'September', 'October', 'November', 'December'];
+let date = new Date();
+let partOfDay;
+
+function checkDate(date) {
+    let numberOfDay = date.getDay();
+    let day = daysOfWeek[numberOfDay];
+    let numberOfMonth = date.getMonth();
+    let month = months[numberOfMonth];
+    let dayOfMonth = date.getDate();
+    dateBlock.textContent = `${day}, ${month} ${dayOfMonth}`
+}
+
+setInterval(changeTime, 1000);
+
+function changePhrase(hours){
+    if(hours > 24) {
+        checkDate(date);
+        greeting.textContent = "Good night";
+    } else if(hours > 16){
+        greeting.textContent = "Good evening";
+    } else if (hours < 12 && hours >= 4) {
+        greeting.textContent = "Good morning";
+    }else if(hours > 12){
+        hours = hours - 12;
+        partOfDay = 'PM';
+        greeting.textContent = "Good afternoon";
+    }
+}
+function changeTime(){
+    date = new Date();
+    
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    let seconds = date.getSeconds();
+    changePhrase(hours);
+    if(hours > 12){
+        hours = hours - 12;
+        partOfDay = 'PM';
+    } else {
+        partOfDay = 'AM';
+    }
+    if(minutes < 10) minutes = '0'+ minutes;
+    if(seconds < 10) seconds = '0'+ seconds;
+    time.textContent = `${hours}:${minutes}:${seconds} ${partOfDay}`;
+}
+checkDate(date);
+changeTime();
+
+
+
