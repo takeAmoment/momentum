@@ -97,6 +97,9 @@ header{
     margin-bottom: 0.3rem;
     margin-left: 2rem;
 }
+.playlist__item.active{
+    color: grey;
+}
 .header__weather{
     width: 17rem;
     font-size: 1.8rem;

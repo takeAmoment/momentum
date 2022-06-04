@@ -4,34 +4,38 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
     <title>Document</title>
 </head>
 <body>
     <div class="wrapper">
         <header class="header">
             <div class="container">
-                <div class="header__player">
-                    <div class="player__buttons">
-                        <div class="button button-prev"></div>
-                        <div class="button button-play"></div>
-                        <div class="button button-next"></div>
+                <div class="header-contant">
+                    <div class="header__player">
+                        <div class="player__buttons">
+                            <div class="button button-prev"></div>
+                            <div class="button button-play"></div>
+                            <div class="button button-next"></div>
+                        </div>
+                        <ul class="playlist">
+                            <li class="playlist__item" data-song="1">Aqua Caelestis</li>
+                            <li class="playlist__item" data-song="2">Ennio Morricone</li>
+                            <li class="playlist__item" data-song="3">River Flows In You</li>
+                            <li class="playlist__item" data-song="4">Summer Wind</li>
+                        </ul>
                     </div>
-                    <ul class="playlist">
-                        <li class="playlist__item">Aqua Caelestis</li>
-                        <li class="playlist__item">Ennio Morricone</li>
-                        <li class="playlist__item">River Flows In You</li>
-                        <li class="playlist__item">Summer Wind</li>
-                    </ul>
-                </div>
-                <div class="header__weather">
-                    <div class="city">Minsk</div>
-                    <div class="weather__icon"></div>
-                    <div class="description-container">
-                        <span class="temperature">15</span>
-                        <span class="weather-description"> clouds</span>
+                    <div class="header__weather">
+                        <div class="city">Minsk</div>
+                        <div class="weather__icon"></div>
+                        <div class="description-container">
+                            <span class="temperature">15</span>
+                            <span class="weather-description"> clouds</span>
+                        </div>
+                        <div class="wind"></div>
+                        <div class="humidity"></div>
                     </div>
-                    <div class="wind"></div>
-                    <div class="humidity"></div>
                 </div>
             </div>
         </header>
@@ -41,28 +45,28 @@
                     <div class="slider-button slider-prev "></div>
                     <div class="slider-button slider-next"></div>
                 </div>
-                <div class="time">
-                </div>
-                <div class="date"></div>
+                <div class="time">13:14:15</div>
+                <div class="date">April 17, 2022</div>
                 <div class="greeting">
-                    <span class="greeting__phrase"></span>
-                    <input type="text" class="greeting__username">
+                    <span class="greeting__phrase">Hello</span>
+                    <input type="text" placeholder="Enter your name" class="greeting__username">
                 </div>
             </div>
         </main>
         <footer class="footer">
-            <div class="container">
+            <div class="footer__container container">
                 <div class="update-icon"></div>
-            <div class="quote">
-                <div class="quote__phrase">
-
-                </div>
-                <div class="quote__author">
-
+                <div class="quote">
+                    <div class="quote__phrase">
+                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Inventore iste ea repellendus, illo tempora officiis nam consequuntur pariatur! Eius id corrupti tempore explicabo quia itaque adipisci obcaecati unde? Expedita, reprehenderit.
+                    </div>
+                    <div class="quote__author">
+                        Shgagjh
                 </div>
             </div>
             </div>
         </footer>
     </div>
+    <script src="script/script.js" type="module"></script>
 </body>
 </html>
