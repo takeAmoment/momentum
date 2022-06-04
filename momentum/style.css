@@ -153,7 +153,7 @@ header{
 .greeting{
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: center;
 }
 .greeting__phrase{
     font-size: 3.6rem;
