@@ -164,11 +164,10 @@ quoteButton.addEventListener('click', changeQuote);
 /*----weather----*/
 const weatherIcon = document.querySelector('.weather__icon');
 const temperature = document.querySelector('.temperature');
+const city = document.querySelector('.city');
 const weatherDescription = document.querySelector('.weather-description');
 const wind = document.querySelector('.wind');
 const humidity = document.querySelector('.humidity');
-
-const weatherUrl = "https://api.openweathermap.org/data/2.5/weather?q=Minsk&lang=en&appid=d5d87ec30d8925c002198f5d389b0212&units=metric";
 
 function addWeather(data){
     weatherIcon.classList.add(`owf-${data.weather[0].id}`);
@@ -179,9 +178,11 @@ function addWeather(data){
     console.log(data);
 }
 async function getWeather(){
+    const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city.value}&lang=en&appid=d5d87ec30d8925c002198f5d389b0212&units=metric`;
     const res = await fetch(weatherUrl);
     const data = await res.json();
     addWeather(data);
 }
 
 getWeather();
+city.addEventListener('change', getWeather);
