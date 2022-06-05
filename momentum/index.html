@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="owfont-regular.css">
     <link rel="stylesheet" href="style.css">
     <title>Document</title>
 </head>
@@ -27,12 +28,12 @@
                         </ul>
                     </div>
                     <div class="header__weather">
-                        <div class="city">Minsk</div>
-                        <div class="weather__icon"></div>
+                        <input type="text" value="Minsk" class="city">
                         <div class="description-container">
-                            <span class="temperature">15</span>
-                            <span class="weather-description"> clouds</span>
+                            <i class="weather__icon owf"></i>
+                            <div class="temperature">15</div>
                         </div>
+                        <div class="weather-description"> clouds</div>
                         <div class="wind"></div>
                         <div class="humidity"></div>
                     </div>
@@ -46,9 +47,9 @@
                     <div class="slider-button slider-next"></div>
                 </div>
                 <div class="time"></div>
-                <div class="date">April 17, 2022</div>
+                <div class="date"></div>
                 <div class="greeting">
-                    <span class="greeting__phrase">Hello</span>
+                    <span class="greeting__phrase"></span>
                     <input type="text" placeholder="Enter your name" class="greeting__username">
                 </div>
             </div>

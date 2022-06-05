@@ -161,4 +161,27 @@ getQuotes();
 
 quoteButton.addEventListener('click', changeQuote);
 
+/*----weather----*/
+const weatherIcon = document.querySelector('.weather__icon');
+const temperature = document.querySelector('.temperature');
+const weatherDescription = document.querySelector('.weather-description');
+const wind = document.querySelector('.wind');
+const humidity = document.querySelector('.humidity');
 
+const weatherUrl = "https://api.openweathermap.org/data/2.5/weather?q=Minsk&lang=en&appid=d5d87ec30d8925c002198f5d389b0212&units=metric";
+
+function addWeather(data){
+    weatherIcon.classList.add(`owf-${data.weather[0].id}`);
+    temperature.textContent = `${Math.floor(data.main.temp)} °C`;
+    weatherDescription.textContent = data.weather[0].description;
+    wind.textContent = `Wind speed: ${data.wind.speed} m/s`;
+    humidity.textContent = `Humidity: ${data.main.humidity} %`;
+    console.log(data);
+}
+async function getWeather(){
+    const res = await fetch(weatherUrl);
+    const data = await res.json();
+    addWeather(data);
+}
+
+getWeather();
