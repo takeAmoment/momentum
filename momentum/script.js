@@ -130,5 +130,35 @@ function changeTime(){
 checkDate(date);
 changeTime();
 
+/*---quote----*/
+const quoteText = document.querySelector('.quote__phrase');
+const quoteAuthor = document.querySelector('.quote__author');
+const quoteButton = document.querySelector('.update-icon');
+
+const url = 'https://type.fit/api/quotes';
+let random;
+
+function changeQuote(){
+    getQuotes();
+}
+function addQuote(data, random){
+    quoteText.textContent = data[random].text;
+    quoteAuthor.textContent = data[random].author;
+}
+function getRandomNumber(data){
+    random = Math.floor(Math.random() * (data.length - 1));
+    return random;
+}
+
+async function getQuotes(){
+    const res = await fetch(url);
+    const data = await res.json(res);
+    random = getRandomNumber(data);
+    addQuote(data, random);
+}
+
+getQuotes();
+
+quoteButton.addEventListener('click', changeQuote);
 
 
