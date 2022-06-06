@@ -104,10 +104,9 @@ function changePhrase(hours){
         greeting.textContent = "Good evening";
     } else if (hours < 12 && hours >= 4) {
         greeting.textContent = "Good morning";
-    }else if(hours > 12){
+    }else if(hours >= 12){
         hours = hours - 12;
-        partOfDay = 'PM';
-        greeting.textContent = "Good afternoon";
+        greeting.textContent = "Good day";
     }
 }
 function changeTime(){
@@ -119,6 +118,8 @@ function changeTime(){
     changePhrase(hours);
     if(hours > 12){
         hours = hours - 12;
+        partOfDay = 'PM';
+    } else if(hours === 12) {
         partOfDay = 'PM';
     } else {
         partOfDay = 'AM';
@@ -175,7 +176,6 @@ function addWeather(data){
     weatherDescription.textContent = data.weather[0].description;
     wind.textContent = `Wind speed: ${data.wind.speed} m/s`;
     humidity.textContent = `Humidity: ${data.main.humidity} %`;
-    console.log(data);
 }
 async function getWeather(){
     const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city.value}&lang=en&appid=d5d87ec30d8925c002198f5d389b0212&units=metric`;
@@ -186,3 +186,85 @@ async function getWeather(){
 
 getWeather();
 city.addEventListener('change', getWeather);
+
+/*----slider----*/
+
+const sliderPrev = document.querySelector('.slider-prev');
+const sliderNext = document.querySelector('.slider-next');
+const backgroundImg = document.querySelector('.wrapper');
+let background;
+let randomArr = [];
+let index = 0;
+
+function checkIsRandom(randomNumber, arr){
+    if(!arr.includes(randomNumber)){
+        return true;
+    }
+    return false;
+}
+function makeRandomArr(min, max){
+    while(randomArr.length < 20) {
+        let randomNumber = Math.floor(min + Math.random() * (max + 1 - min));
+        if(randomNumber < 10) randomNumber = "0"+ randomNumber;
+        if(!checkIsRandom(randomNumber, randomArr)){
+            return makeRandomArr(1, 20);
+        } else {
+            randomArr.push(randomNumber);
+        } 
+
+    }
+    return randomArr;
+}
+function checkPartOfDay(){
+    switch (greeting.innerHTML) {
+        case 'Good morning':
+            background = 'morning';
+            break;
+        case 'Good day':
+            background = 'afternoon';
+            break;
+        case 'Good evening':
+            background = 'evening';
+            break;
+        case 'Good night':
+            background = 'night';
+            break;
+        default:
+            break;
+    }
+    return background;
+}
+async function getBackgroud(index, randomArr){
+    background = checkPartOfDay();
+    console.log(randomArr);
+    const img = new Image();
+    img.src = `https://raw.githubusercontent.com/rolling-scopes-school/stage1-tasks/assets/images/${background}/${randomArr[index]}.jpg`;
+    img.addEventListener('load', (randomArr, index) => {
+        backgroundImg.style.backgroundImage = `url(${img.src})`;
+    })
+    
+}
+
+
+randomArr = makeRandomArr(1, 20);
+getBackgroud(index,randomArr);
+
+function getNextImage(){
+    if(index === randomArr.length - 1){
+        index = 0;
+        getBackgroud(index, randomArr);
+    }
+    index++;
+    getBackgroud(index, randomArr);
+}
+
+function getPrevImage(){
+    if(index === 0){
+        index = randomArr.length -1;
+        getBackgroud(index, randomArr);
+    }
+    index--;
+    getBackgroud(index, randomArr)
+}
+sliderNext.addEventListener('click', getNextImage);
+sliderPrev.addEventListener('click', getPrevImage);

@@ -25,14 +25,13 @@ html {
     height: 100%;
     overflow-x: hidden;
     display: flex;
-    /* align-items: center;
-    justify-content: center; */
     flex-direction: column;
-    background-image: url(assets/images/1.jpg);
-    background-size: auto;
+    background: url(style.css) center center / cover, rgba(0, 0, 0, 0.5);
+    /* background-size: auto;
     background-position: center center;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat; */
     background-blend-mode: multiply;
+    transition: background-image 1s ease-in-out 0s;
     
 }
 .container{
@@ -160,6 +159,10 @@ header{
     opacity: 0.6;
     cursor: pointer;
 }
+.slider-button:hover{
+    opacity: 1;
+    transition: opacity 0.3s;
+}
 .slider-prev{
     top: 50%;
     left: 20px;
@@ -225,6 +228,7 @@ header{
 }
 .update-icon:hover{
     opacity: 1;
+    transition: opacity 0.3s;
 }
 .quote{
     display: flex;
