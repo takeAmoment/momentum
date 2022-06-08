@@ -1,11 +1,15 @@
 let lang = 'en';
+const enLang = document.querySelector('.en');
+const ruLang = document.querySelector('.ru');
 
-function checkLang(){
+function checkLang(lang){
     if(lang === 'en'){
-        return true;
+        enLang.classList.add('active');
+    } else if(lang === 'ru'){
+        ruLang.classList.add('active');
     }
-    return false;
 }
+
 /*---audio---*/
 const playerPrevBtn = document.querySelector('.button-prev');
 const playerPlayBtn = document.querySelector('.button-play');
@@ -348,11 +352,13 @@ function getLocalStorage(){
     if(localStorage.getItem('lang')){
         lang = localStorage.getItem('lang');
         getTranslate(lang);
+        
     };
 
     if(localStorage.getItem('city')){
         city.value = localStorage.getItem('city');
     }
+    checkLang(lang);
 }
 
 window.addEventListener('load', getLocalStorage);

@@ -100,16 +100,26 @@ header{
     color: grey;
 }
 .languages{
-    font-size: 2.4rem;
+    margin-left: auto;
+    margin-right: 40px;
+    font-size: 2.0rem;
+    font-weight: bold;
 }
 .lang{
     cursor: pointer;
+    transform: scale(1.05);
+    transition: all 0.3s;
+}
+.slash{
+    color: rgb(123, 109, 27);
 }
 .lang:hover{
-    color: gold;
+    color: rgb(123, 109, 27);
+    transition: all 0.3s;
 }
 .lang.active{
-    color: gold;
+    color: rgb(123, 109, 27);
+    transition: all 0.3s;
 }
 .header__weather{
     width: 19rem;
@@ -118,10 +128,10 @@ header{
 .city{
     outline: none;
     border: none;
-    border-bottom: 1px solid rgba(255, 217, 0, 0.389);
+    border-bottom: 4px solid rgb(123, 109, 27);;
     background-color: inherit;
     color: white;
-    font-size: 1.8rem;
+    font-size: 2.0rem;
     width: 19rem;
     margin-bottom: 1.5rem;
 }
