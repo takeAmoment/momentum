@@ -1,3 +1,11 @@
+let lang = 'en';
+
+function checkLang(){
+    if(lang === 'en'){
+        return true;
+    }
+    return false;
+}
 /*---audio---*/
 const playerPrevBtn = document.querySelector('.button-prev');
 const playerPlayBtn = document.querySelector('.button-play');
@@ -77,45 +85,82 @@ playerNextBtn.addEventListener('click', playNextSong);
 const time = document.querySelector('.time');
 const dateBlock = document.querySelector('.date');
 const greeting = document.querySelector('.greeting__phrase');
+let timeOfDay;
 
-const daysOfWeek = ['Sanday', 'Monday', 'Tuesday', 'Wednesday',
-        'Thursday', 'Friday', 'Saturday'];
-const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
-        'August', 'September', 'October', 'November', 'December'];
+const daysOfWeek = {
+    en:['Sanday', 'Monday', 'Tuesday', 'Wednesday',
+        'Thursday', 'Friday', 'Saturday'],
+    ru: ['Воскресенье', 'Понедельник', 'Вторник', 'Среда',
+    'Четверг', 'Пятница', 'Суббота'],
+}
+// const daysOfWeekRu = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда',
+//         'Четверг', 'Пятница', 'Суббота'];
+const months = {
+    en: ['January', 'February', 'March', 'April', 'May', 'June', 'July',
+        'August', 'September', 'October', 'November', 'December'],
+    ru: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль',
+    'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+}
 let date = new Date();
 let partOfDay;
 
 function checkDate(date) {
     let numberOfDay = date.getDay();
-    let day = daysOfWeek[numberOfDay];
+    let day = daysOfWeek[lang][numberOfDay];
     let numberOfMonth = date.getMonth();
-    let month = months[numberOfMonth];
+    let month = months[lang][numberOfMonth];
     let dayOfMonth = date.getDate();
     dateBlock.textContent = `${day}, ${month} ${dayOfMonth}`
 }
 
 setInterval(changeTime, 1000);
 
-function changePhrase(hours){
-    if(hours > 24) {
-        checkDate(date);
-        greeting.textContent = "Good night";
+function changePhrase(hours, lang){
+    let ruStartOfPhrase;
+    if(hours >= 24) {
+        checkDate(date, lang);
+        timeOfDay = {
+            en:"night",
+            ru: "ночи",
+        }
+        ruStartOfPhrase = "Доброй";
     } else if(hours > 16){
-        greeting.textContent = "Good evening";
+        timeOfDay = {
+            en: "evening",
+            ru: "вечер",
+        }
+        ruStartOfPhrase = "Добрый";
     } else if (hours < 12 && hours >= 4) {
-        greeting.textContent = "Good morning";
+        timeOfDay= {
+            en: "morning",
+            ru: "утро",
+        }
+        ruStartOfPhrase = "Доброе";
     }else if(hours >= 12){
         hours = hours - 12;
-        greeting.textContent = "Good day";
+        timeOfDay = {
+            en: "afternoon",
+            ru: "дня",
+        }
+        ruStartOfPhrase = "Доброго";
     }
+
+    if(lang === "en"){
+        greeting.textContent = `Good ${timeOfDay.en}`;
+    } else if(lang === "ru"){
+        greeting.textContent = `${ruStartOfPhrase} ${timeOfDay.ru}`
+    }
+    
+    return timeOfDay.en;
 }
-function changeTime(){
+
+function changeTime(lang){
     date = new Date();
     
     let hours = date.getHours();
     let minutes = date.getMinutes();
     let seconds = date.getSeconds();
-    changePhrase(hours);
+    changePhrase(hours, lang);
     if(hours > 12){
         hours = hours - 12;
         partOfDay = 'PM';
@@ -128,19 +173,19 @@ function changeTime(){
     if(seconds < 10) seconds = '0'+ seconds;
     time.textContent = `${hours}:${minutes}:${seconds} ${partOfDay}`;
 }
-checkDate(date);
-changeTime();
+checkDate(date, lang);
+changeTime(lang);
 
 /*---quote----*/
 const quoteText = document.querySelector('.quote__phrase');
 const quoteAuthor = document.querySelector('.quote__author');
 const quoteButton = document.querySelector('.update-icon');
 
-const url = 'https://type.fit/api/quotes';
+// const url = 'https://type.fit/api/quotes';
+const url = 'data.json';
 let random;
-
 function changeQuote(){
-    getQuotes();
+    getQuotes(lang);
 }
 function addQuote(data, random){
     quoteText.textContent = data[random].text;
@@ -151,14 +196,14 @@ function getRandomNumber(data){
     return random;
 }
 
-async function getQuotes(){
+async function getQuotes(lang){
     const res = await fetch(url);
     const data = await res.json(res);
-    random = getRandomNumber(data);
-    addQuote(data, random);
+    random = getRandomNumber(data[lang]);
+    addQuote(data[lang], random);
 }
 
-getQuotes();
+getQuotes(lang);
 
 quoteButton.addEventListener('click', changeQuote);
 
@@ -174,17 +219,23 @@ function addWeather(data){
     weatherIcon.classList.add(`owf-${data.weather[0].id}`);
     temperature.textContent = `${Math.floor(data.main.temp)} °C`;
     weatherDescription.textContent = data.weather[0].description;
-    wind.textContent = `Wind speed: ${data.wind.speed} m/s`;
-    humidity.textContent = `Humidity: ${data.main.humidity} %`;
+    if(lang === "en"){
+        wind.textContent = `Wind speed: ${data.wind.speed} m/s`;
+        humidity.textContent = `Humidity: ${data.main.humidity} %`;
+    } else if(lang === "ru"){
+        wind.textContent = `Скорость ветра: ${data.wind.speed} м/с`;
+        humidity.textContent = `Влажность: ${data.main.humidity} %`;
+    }
+    
 }
-async function getWeather(){
-    const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city.value}&lang=en&appid=d5d87ec30d8925c002198f5d389b0212&units=metric`;
+async function getWeather(lang){
+    const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city.value}&lang=${lang}&appid=d5d87ec30d8925c002198f5d389b0212&units=metric`;
     const res = await fetch(weatherUrl);
     const data = await res.json();
     addWeather(data);
 }
 
-getWeather();
+getWeather(lang);
 city.addEventListener('change', getWeather);
 
 /*----slider----*/
@@ -216,35 +267,21 @@ function makeRandomArr(min, max){
     return randomArr;
 }
 function checkPartOfDay(){
-    switch (greeting.innerHTML) {
-        case 'Good morning':
-            background = 'morning';
-            break;
-        case 'Good day':
-            background = 'afternoon';
-            break;
-        case 'Good evening':
-            background = 'evening';
-            break;
-        case 'Good night':
-            background = 'night';
-            break;
-        default:
-            break;
-    }
+    let date = new Date();
+    let hours = date.getHours();
+    background = changePhrase(hours);
     return background;
 }
 async function getBackgroud(index, randomArr){
     background = checkPartOfDay();
-    console.log(randomArr);
     const img = new Image();
     img.src = `https://raw.githubusercontent.com/rolling-scopes-school/stage1-tasks/assets/images/${background}/${randomArr[index]}.jpg`;
-    img.addEventListener('load', (randomArr, index) => {
+    img.addEventListener('load', () => {
         backgroundImg.style.backgroundImage = `url(${img.src})`;
+        backgroundImg.style.backgroundSize = "cover"
     })
     
 }
-
 
 randomArr = makeRandomArr(1, 20);
 getBackgroud(index,randomArr);
@@ -268,3 +305,49 @@ function getPrevImage(){
 }
 sliderNext.addEventListener('click', getNextImage);
 sliderPrev.addEventListener('click', getPrevImage);
+
+
+/*------lang-----*/
+
+// const translator = {
+//     en: {
+//         'wind': 'Wind speed:',
+//         'speed': 'm/s',
+//         'humidity': 'Humidity:'
+//     },
+//     ru: {
+//         'wind': 'Скорость ветра:',
+//         'speed': 'м/с',
+//         'humidity': 'Влажность:'
+//     },
+// }
+
+// window.onload  = function fullPage() {
+//     let data = document.querySelectorAll('[data-lang]');
+//     data.forEach(elem => {
+//         elem.textContent = translator[lang][elem.dataset.lang];
+//     })
+
+// }
+
+const languages = document.querySelectorAll('.lang');
+
+function getTranslate(lang){
+    getWeather(lang);
+    getQuotes(lang);
+    checkDate(date, lang);
+    changeTime(lang);
+}
+function deleteActive(){
+    for(let elem of languages){
+        elem.classList.remove('active');
+    }
+}
+for(let elem of languages){
+    elem.addEventListener('click', function(){
+        deleteActive();
+        elem.classList.add('active');
+        lang = elem.dataset.lang;
+        getTranslate(lang);
+    })
+}
