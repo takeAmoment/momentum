@@ -308,28 +308,6 @@ sliderPrev.addEventListener('click', getPrevImage);
 
 
 /*------lang-----*/
-
-// const translator = {
-//     en: {
-//         'wind': 'Wind speed:',
-//         'speed': 'm/s',
-//         'humidity': 'Humidity:'
-//     },
-//     ru: {
-//         'wind': 'Скорость ветра:',
-//         'speed': 'м/с',
-//         'humidity': 'Влажность:'
-//     },
-// }
-
-// window.onload  = function fullPage() {
-//     let data = document.querySelectorAll('[data-lang]');
-//     data.forEach(elem => {
-//         elem.textContent = translator[lang][elem.dataset.lang];
-//     })
-
-// }
-
 const languages = document.querySelectorAll('.lang');
 
 function getTranslate(lang){
@@ -351,3 +329,30 @@ for(let elem of languages){
         getTranslate(lang);
     })
 }
+
+/*-----local storage-----*/
+const userName = document.querySelector('.greeting__username');
+
+function setLocalStorage() {
+    localStorage.setItem('name', userName.value);
+    localStorage.setItem('lang', lang);
+    localStorage.setItem('city', city.value);
+}
+window.addEventListener('beforeunload', setLocalStorage);
+
+function getLocalStorage(){
+    if(localStorage.getItem('name')){
+        userName.value = localStorage.getItem('name');
+    };
+
+    if(localStorage.getItem('lang')){
+        lang = localStorage.getItem('lang');
+        getTranslate(lang);
+    };
+
+    if(localStorage.getItem('city')){
+        city.value = localStorage.getItem('city');
+    }
+}
+
+window.addEventListener('load', getLocalStorage);
