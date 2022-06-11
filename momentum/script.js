@@ -15,30 +15,48 @@ const playerPrevBtn = document.querySelector('.button-prev');
 const playerPlayBtn = document.querySelector('.button-play');
 const playerNextBtn = document.querySelector('.button-next');
 const playlistItems = document.querySelectorAll('.playlist__item');
+const progressBar = document.querySelector('.progress-bar');
+const volume = document.querySelector('.volume__input');
+const volumeIcon = document.querySelector('.volume__icon');
+
 const audio = new Audio();
 const playlist = ["1", "2", "3", "4"];
 let currentSong = 0;
 let currentTime = 0;
 let isPlay = false;
+let isVolume = true;
+audio.volume = 0.4;
+volume.style.background = `linear-gradient(to right, rgb(189, 169, 121) 0%, rgb(189, 169, 121) ${volume.value}%, rgb(200, 200, 200) ${volume.value}%, rgb(200, 200, 200) 100%)`;
 
+function changeVolume(){
+    audio.volume = volume.value / 100;
+    volume.style.background = `linear-gradient(to right, rgb(189, 169, 121) 0%, rgb(189, 169, 121) ${volume.value}%, rgb(200, 200, 200) ${volume.value}%, rgb(200, 200, 200) 100%)`;
+}
+function showInput(){
+    volume.classList.toggle('active');
+}
+function moveRange(){
+    progressBar.value = audio.currentTime / audio.duration * 100;
+    progressBar.style.background = `linear-gradient(to right, rgb(189, 169, 121) 0%, rgb(189, 169, 121) ${progressBar.value}%, rgb(200, 200, 200) ${progressBar.value}%, rgb(200, 200, 200) 100%)`;
+}
 function playPrevSong(){
     currentTime = 0;
     if(currentSong <= 0){
         currentSong = playlist.length -1;
-        audioPlay();
+        audioPlay(currentTime);
     } else {
         currentSong--;
-        audioPlay();
+        audioPlay(currentTime);
     }
 }
 function playNextSong() {
     currentTime = 0;
     if(currentSong >= playlist.length - 1){
         currentSong = 0;
-        audioPlay();
+        audioPlay(currentTime);
     } else {
         currentSong++;
-        audioPlay();
+        audioPlay(currentTime);
     }
 }
 function removeActive(item) {
@@ -47,8 +65,6 @@ function removeActive(item) {
 function addActive(){
     for(let item of playlistItems){
         removeActive(item);
-        // console.log(item.dataset.song);
-        // console.log(playlist[currentSong]);
         if(playlist[currentSong] === item.dataset.song){
             item.classList.add('active');
         }
@@ -66,11 +82,13 @@ function audioPause() {
     isPlay = false;
     changeIcon();
 }
-function audioPlay(){
+function audioPlay(currentTime){
     audio.src = `./assets/audio/${playlist[currentSong]}.mp3`;
     audio.currentTime = currentTime;
     audio.play();
+    setInterval(() => moveRange(), 2000);
     isPlay = true;
+    
     changeIcon();
     addActive();
 }
@@ -79,11 +97,18 @@ playerPlayBtn.addEventListener('click', function(){
         currentTime = audio.currentTime;
         audioPause();
     } else {
-        audioPlay();
+        audioPlay(currentTime);
     }
 });
 playerPrevBtn.addEventListener('click', playPrevSong);
 playerNextBtn.addEventListener('click', playNextSong);
+progressBar.addEventListener('change', function(){
+    currentTime = progressBar.value * audio.duration / 100;
+    console.log(audio.duration)
+    audioPlay(currentTime);
+});
+volumeIcon.addEventListener('click', showInput);
+volume.addEventListener('change', changeVolume);
 
 /*---time and date---*/
 const time = document.querySelector('.time');

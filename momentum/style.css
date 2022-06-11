@@ -56,6 +56,61 @@ header{
 .header__player{
     display: flex;
     flex-direction: column;
+    width: 25rem;
+}
+.player__controlers{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    margin-bottom: 1.5rem;
+}
+.progress-bar{
+    width: 13.5rem;
+    margin-right: 1rem;
+    height: 1rem;
+    border: none;
+    -webkit-appearance: none;
+    outline: none;
+    transition: backgroundColor 0.5s ease-in;
+    background-color: rgb(200, 200, 200);
+}
+.volume__input{
+    display: none;
+    width: 50px;
+    height: 5px;
+    border: none;
+    -webkit-appearance: none;
+    outline: none;
+    transition: backgroundColor 0.5s ease-in;
+}
+.volume__input.active{
+    display: block;
+}
+.progress-bar::-webkit-slider-thumb,
+.volume__input::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    border-radius: 40%;
+    width: 13px;
+    height: 13px;
+    background-color: aliceblue;
+    
+}
+.volume__icon{
+    width: 2rem;
+    height: 2rem;
+    background-image: url(assets/icons/low-volume.png);
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-color: rgba(255, 255, 255, 0.8);
+    margin-right: 0.3rem;
+}
+.volume{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
 .player__buttons{
     width: 135px;
@@ -74,7 +129,10 @@ header{
     background-size: 32px 32px;
     background-position: center center;
     background-repeat: no-repeat;
-
+    transition: all 0.3s;
+}
+.button:hover{
+    opacity: 0.7;
 }
 .button-prev{
     background-image: url(assets/icons/play-prev.svg);
@@ -97,7 +155,7 @@ header{
     margin-left: 2rem;
 }
 .playlist__item.active{
-    color: grey;
+    color: rgb(185, 169, 121);
 }
 .languages{
     margin-left: auto;
@@ -111,14 +169,14 @@ header{
     transition: all 0.3s;
 }
 .slash{
-    color: rgb(123, 109, 27);
+    color: rgb(185, 169, 121);
 }
 .lang:hover{
-    color: rgb(123, 109, 27);
+    color: rgb(185, 169, 121);
     transition: all 0.3s;
 }
 .lang.active{
-    color: rgb(123, 109, 27);
+    color: rgb(185, 169, 121);
     transition: all 0.3s;
 }
 .header__weather{
@@ -128,7 +186,7 @@ header{
 .city{
     outline: none;
     border: none;
-    border-bottom: 4px solid rgb(123, 109, 27);;
+    border-bottom: 4px solid rgb(185, 169, 121);
     background-color: inherit;
     color: white;
     font-size: 2.0rem;
