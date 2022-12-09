@@ -38,6 +38,9 @@ function showInput(){
 function moveRange(){
     progressBar.value = audio.currentTime / audio.duration * 100;
     progressBar.style.background = `linear-gradient(to right, rgb(189, 169, 121) 0%, rgb(189, 169, 121) ${progressBar.value}%, rgb(200, 200, 200) ${progressBar.value}%, rgb(200, 200, 200) 100%)`;
+    if (audio.currentTime === audio.duration) {
+        playNextSong();
+    }
 }
 function playPrevSong(){
     currentTime = 0;
@@ -72,9 +75,9 @@ function addActive(){
 }
 function changeIcon(){
     if(isPlay) {
-        playerPlayBtn.style.backgroundImage = "url('/momentum/assets/icons/pause.svg')";
+        playerPlayBtn.classList.add('paused');
     } else {
-        playerPlayBtn.style.backgroundImage = "url('/momentum/assets/icons/play.svg')";
+        playerPlayBtn.classList.remove('paused');
     }
 }
 function audioPause() {
@@ -104,7 +107,6 @@ playerPrevBtn.addEventListener('click', playPrevSong);
 playerNextBtn.addEventListener('click', playNextSong);
 progressBar.addEventListener('change', function(){
     currentTime = progressBar.value * audio.duration / 100;
-    console.log(audio.duration)
     audioPlay(currentTime);
 });
 volumeIcon.addEventListener('click', showInput);
